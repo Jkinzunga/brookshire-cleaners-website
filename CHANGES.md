@@ -2,6 +2,13 @@
 
 ---
 
+## Error Boundary
+*index.html*
+
+Added a React class component called `ErrorBoundary` that wraps the entire app. If any component throws a runtime error, React would normally unmount everything and leave a blank page with no explanation. With the boundary in place, a runtime error now shows a simple message telling the visitor something went wrong, gives them the phone number, and offers a refresh button. The component uses `getDerivedStateFromError` so it catches errors during rendering without crashing the whole tree.
+
+---
+
 ## robots.txt and sitemap.xml
 *robots.txt, sitemap.xml*
 
