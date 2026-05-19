@@ -2,6 +2,13 @@
 
 ---
 
+## robots.txt and sitemap.xml
+*robots.txt, sitemap.xml*
+
+Added `robots.txt` allowing all crawlers and pointing to the sitemap. Added `sitemap.xml` listing the homepage, privacy page, and terms page with last-modified dates and priority hints. Both files need to be served from the root of the live domain — once the site is deployed to `brookshirescleaners.com`, search engines will pick these up automatically. The sitemap `lastmod` date should be updated whenever the content changes in a meaningful way.
+
+---
+
 ## Favicon
 *favicon.svg, favicon.ico*
 
