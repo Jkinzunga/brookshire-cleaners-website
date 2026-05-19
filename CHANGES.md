@@ -2,6 +2,13 @@
 
 ---
 
+## Favicon
+*favicon.svg, favicon.ico*
+
+Added two favicon files to the project root. The SVG version (`favicon.svg`) uses the same hanger icon from the navigation bar, set on a sage green rounded-square background. Modern browsers will pick this up. The ICO file (`favicon.ico`) is a plain 16x16 sage green square that serves as a fallback for older browsers and crawlers that still request the traditional format. An `apple-touch-icon.png` still needs to be created — that will be part of the Vite setup phase where all assets get properly organized.
+
+---
+
 ## Color Contrast Fix
 *index.html*
 
