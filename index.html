@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brookshire's Cleaners — Charlotte's Trusted Dry Cleaner Since 2009</title>
+  <meta name="description" content="Brookshire's Cleaners at 3900 Brookshire Blvd, Charlotte NC. Expert dry cleaning, wash & fold, alterations, and sneaker cleaning. 4.6 stars on Yelp." />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.5/babel.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            ivory:'#F7F4EF', ink:'#1C1C1E', sage:'#4A7C6F',
+            mist:'#C8DBD5',  stone:'#9E9589', cream:'#EDE9E1',
+          },
+          fontFamily: {
+            display:['"Playfair Display"','Georgia','serif'],
+            body:['Inter','system-ui','sans-serif'],
+          },
+          boxShadow: {
+            card:'0 2px 20px rgba(0,0,0,0.06)',
+            lift:'0 10px 40px rgba(0,0,0,0.10)',
+            glow:'0 0 36px rgba(74,124,111,0.18)',
+          },
+          animation: {
+            'fade-up':'fadeUp 0.65s ease both',
+            'fade-in':'fadeIn 0.5s ease both',
+            'float':'float 7s ease-in-out infinite',
+          },
+          keyframes: {
+            fadeUp:{'0%':{opacity:'0',transform:'translateY(22px)'},'100%':{opacity:'1',transform:'translateY(0)'}},
+            fadeIn:{'0%':{opacity:'0'},'100%':{opacity:'1'}},
+            float:{'0%,100%':{transform:'translateY(0)'},'50%':{transform:'translateY(-9px)'}},
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth}
+    body{background:#F7F4EF;color:#1C1C1E;font-family:'Inter',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+    ::-webkit-scrollbar{width:5px}
+    ::-webkit-scrollbar-track{background:#F7F4EF}
+    ::-webkit-scrollbar-thumb{background:#C8DBD5;border-radius:3px}
+
+    /* Delays */
+    .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}
+
+    /* Reveal on scroll */
+    .reveal{opacity:0;transform:translateY(26px);transition:opacity .6s ease,transform .6s ease}
+    .reveal.visible{opacity:1;transform:translateY(0)}
+    .reveal-l{opacity:0;transform:translateX(-24px);transition:opacity .6s ease,transform .6s ease}
+    .reveal-l.visible{opacity:1;transform:translateX(0)}
+    .reveal-r{opacity:0;transform:translateX(24px);transition:opacity .6s ease,transform .6s ease}
+    .reveal-r.visible{opacity:1;transform:translateX(0)}
+
+    /* Interactions */
+    .hover-lift{transition:transform .28s cubic-bezier(.34,1.56,.64,1),box-shadow .28s ease}
+    .hover-lift:hover{transform:translateY(-5px);box-shadow:0 16px 40px rgba(0,0,0,0.11)}
+    .btn{transition:transform .14s ease,box-shadow .14s ease;cursor:pointer}
+    .btn:hover{transform:translateY(-2px);box-shadow:0 7px 22px rgba(74,124,111,.32)}
+    .btn:active{transform:translateY(0)}
+    .scale-card{transition:transform .28s ease}
+    .scale-card:hover{transform:scale(1.012)}
+
+    /* Nav blur */
+    .nav-blur{backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);background:rgba(247,244,239,.9)}
+
+    /* Ambient orb */
+    .orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;z-index:0}
+
+    /* Stars */
+    .star{color:#F5A623}
+
+    /* Noise texture */
+    .noise{position:absolute;inset:0;pointer-events:none;opacity:.025;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+
+    /* Underline link */
+    .ulink{position:relative}
+    .ulink::after{content:'';position:absolute;bottom:-1px;left:0;width:0;height:1.5px;background:#4A7C6F;transition:width .22s ease}
+    .ulink:hover::after{width:100%}
+
+    /* Review card quote mark */
+    .big-quote{font-family:'Playfair Display',Georgia,serif;font-size:4.5rem;line-height:1;
+      color:#C8DBD5;position:absolute;top:.75rem;left:1.25rem;pointer-events:none;user-select:none}
+
+    /* Step number ghost */
+    .step-num{font-family:'Playfair Display',Georgia,serif;font-size:5.5rem;line-height:1;
+      color:#EDE9E1;position:absolute;bottom:-.5rem;right:.75rem;pointer-events:none;user-select:none}
+
+    /* Stat divider pill */
+    .stat-divider{width:1px;background:#EDE9E1;align-self:stretch;margin:0 .25rem}
+  </style>
+</head>
+<body>
+<div id="root"></div>
+
+<script type="text/babel">
+const { useState, useEffect, useRef } = React;
+
+/* ═══════════════════════════════════════════════
+   ICONS — inline SVG, consistent 1.5px stroke
+═══════════════════════════════════════════════ */
+const ICONS = {
+  hanger:  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20.38 18H3.62a1 1 0 01-.77-1.64L12 6"/><path d="M12 6V3"/><circle cx="12" cy="3" r="1"/><path d="M8 18v2a2 2 0 004 0v-2"/></svg>,
+  wash:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="18" rx="3"/><circle cx="12" cy="12" r="4"/><path d="M12 8v1M12 15v1M8 12h1M15 12h1"/></svg>,
+  scissors:<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>,
+  shoe:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 18l4-8h10l4 4-2 4H2z"/><path d="M6 10V7a2 2 0 012-2h4"/><path d="M10 10l2-4"/></svg>,
+  star:    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>,
+  check:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"/></svg>,
+  phone:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 015.13 12.9 19.79 19.79 0 012.05 4.3 2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>,
+  clock:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>,
+  map:     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>,
+  arrow:   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>,
+  leaf:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M2 22 16 8"/><path d="M17.9 1.1A17 17 0 011.1 17.9a17 17 0 0016.8-16.8z"/></svg>,
+  shield:  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>,
+  sparkle: <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>,
+  quote:   <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 21c3 0 7-1 7-8V5c0-1.25-.756-2.017-2-2H4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2 1 0 1 0 1 1v1c0 1-1 2-2 2s-1 .008-1 1.031V20c0 1 0 1 1 1z"/><path d="M15 21c3 0 7-1 7-8V5c0-1.25-.757-2.017-2-2h-4c-1.25 0-2 .75-2 1.972V11c0 1.25.75 2 2 2h.75c0 2.25.25 4-2.75 4v3c0 1 0 1 1 1z"/></svg>,
+  mail:    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>,
+};
+const Icon = ({ n, size=20, cls='' }) => (
+  <span className={cls} style={{display:'inline-flex',width:size,height:size,flexShrink:0}}>{ICONS[n]}</span>
+);
+
+/* ═══════════════════════════════════════════════
+   SCROLL REVEAL
+═══════════════════════════════════════════════ */
+const useReveal = () => {
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      es => es.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible') }),
+      { threshold: 0.08 }
+    );
+    document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el => obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+};
+
+/* ═══════════════════════════════════════════════
+   LOGO COMPONENT — uses the PNG we generated
+═══════════════════════════════════════════════ */
+const Logo = ({ height=38, variant='dark' }) => (
+  <img
+    src={variant === 'white' ? 'brookshire_logo_white.png' : 'brookshire_logo.png'}
+    alt="Brookshire's Cleaners — Charlotte, NC"
+    style={{ height, width:'auto', display:'block' }}
+  />
+);
+
+/* ═══════════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════════ */
+const Nav = () => {
+  const [scrolled, setScrolled] = useState(false);
+  const [open, setOpen]         = useState(false);
+  useEffect(() => {
+    const fn = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', fn);
+    return () => window.removeEventListener('scroll', fn);
+  }, []);
+
+  const links = ['Services','How It Works','Reviews','Visit Us'];
+
+  return (
+    <nav
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-500
+        ${scrolled ? 'nav-blur shadow-card py-3' : 'bg-transparent py-5'}`}
+      role="navigation" aria-label="Main navigation"
+    >
+      <div className="max-w-6xl mx-auto px-6 flex items-center justify-between">
+
+        {/* Logo */}
+        <a href="#" className="flex items-center gap-3 flex-shrink-0">
+          {/* Hanger icon */}
+          <div className="w-10 h-10 rounded-xl border-2 border-ink flex items-center justify-center flex-shrink-0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1C1C1E" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M3 18.5h18L12 10 3 18.5z"/>
+              <path d="M12 10V6.5"/>
+              <path d="M10 6.5a2 2 0 1 1 4 0"/>
+            </svg>
+          </div>
+          {/* Wordmark */}
+          <div className="flex flex-col leading-tight">
+            <span className="font-display font-semibold text-ink text-[1.05rem] tracking-wide">Brookshire</span>
+            <span className="font-body text-stone text-[0.62rem] tracking-[0.18em] uppercase">Cleaners · Charlotte, NC</span>
+          </div>
+        </a>
+
+        {/* Desktop links */}
+        <div className="hidden md:flex items-center gap-7">
+          {links.map(l => (
+            <a key={l} href={`#${l.toLowerCase().replace(/ /g,'-')}`}
+               className="ulink font-body text-sm text-stone hover:text-ink transition-colors duration-200">
+              {l}
+            </a>
+          ))}
+        </div>
+
+        {/* Phone + CTA */}
+        <div className="hidden md:flex items-center gap-3">
+          <a href="tel:+17043930088"
+             className="flex items-center gap-1.5 font-body text-sm text-stone hover:text-sage transition-colors">
+            <Icon n="phone" size={13}/>(704) 393-0088
+          </a>
+          <a href="tel:+17043930088"
+             className="btn bg-sage text-white font-body font-medium text-sm px-5 py-2.5 rounded-full">
+            Call to Schedule
+          </a>
+        </div>
+
+        {/* Mobile hamburger */}
+        <button className="md:hidden p-2" onClick={() => setOpen(!open)} aria-label="Toggle menu">
+          {[0,1,2].map(i => (
+            <div key={i} className={`w-5 h-0.5 bg-ink mb-1 last:mb-0 transition-all duration-300
+              ${open && i===0 ? 'rotate-45 translate-y-1.5' : ''}
+              ${open && i===1 ? 'opacity-0' : ''}
+              ${open && i===2 ? '-rotate-45 -translate-y-1.5' : ''}`}/>
+          ))}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      {open && (
+        <div className="md:hidden nav-blur border-t border-cream px-6 pt-4 pb-6 mt-1">
+          {links.map(l => (
+            <a key={l} href={`#${l.toLowerCase().replace(/ /g,'-')}`}
+               className="block font-body text-ink py-3 border-b border-cream/50 text-sm"
+               onClick={() => setOpen(false)}>{l}</a>
+          ))}
+          <a href="tel:+17043930088"
+             className="mt-5 block text-center bg-sage text-white font-body font-medium text-sm py-3 rounded-full"
+             onClick={() => setOpen(false)}>
+            Call (704) 393-0088
+          </a>
+        </div>
+      )}
+    </nav>
+  );
+};
+
+/* ═══════════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════════ */
+const Hero = () => {
+  const [imgLoaded, setImgLoaded] = useState(false);
+
+  return (
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-ivory pt-20"
+             aria-labelledby="hero-heading">
+      {/* Ambient orbs */}
+      <div className="orb w-[420px] h-[420px] bg-mist opacity-35 -top-16 -right-16"/>
+      <div className="orb w-56 h-56 bg-sage opacity-[0.07] bottom-20 -left-10"/>
+      <div className="noise"/>
+
+      <div className="relative z-10 max-w-6xl mx-auto px-6 w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center min-h-[calc(100vh-80px)] py-16">
+
+          {/* ── Left copy ── */}
+          <div>
+            {/* Social proof pill */}
+            <div className="inline-flex items-center gap-2.5 bg-white border border-cream rounded-full px-4 py-2 mb-8 shadow-card animate-fade-in">
+              <div className="flex gap-px">{[...Array(5)].map((_,i) => <Icon key={i} n="star" size={12} cls="star"/>)}</div>
+              <span className="font-body text-xs text-stone">4.6 on Yelp · Serving Charlotte since 2009</span>
+            </div>
+
+            <h1 id="hero-heading"
+                className="font-display text-5xl md:text-6xl lg:text-[4.2rem] leading-[1.04] text-ink mb-6 animate-fade-up">
+              Your clothes,<br/>
+              <em className="text-sage not-italic">cared for</em><br/>
+              like our own.
+            </h1>
+
+            <p className="font-body text-stone text-lg leading-[1.8] mb-10 max-w-md animate-fade-up d2">
+              Charlotte's neighborhood dry cleaner — expert cleaning, alterations, and wash & fold with the kind of personal attention you only get from a place that's been here over 17 years.
+            </p>
+
+            <div className="flex flex-col sm:flex-row gap-3 animate-fade-up d3">
+              <a href="tel:+17043930088"
+                 className="btn inline-flex items-center justify-center gap-2.5 bg-sage text-white font-body font-medium text-base px-8 py-4 rounded-full">
+                <Icon n="phone" size={17}/>Call to Schedule
+              </a>
+              <a href="#services"
+                 className="inline-flex items-center justify-center gap-2 border border-stone/25 text-ink font-body font-medium text-base px-8 py-4 rounded-full hover:border-sage hover:text-sage transition-colors duration-200">
+                Explore Services
+              </a>
+            </div>
+
+            {/* Stats row — dividers between each */}
+            <div className="flex items-stretch gap-0 mt-12 pt-8 border-t border-cream animate-fade-up d4">
+              {[
+                { v:'17+',  l:'Years in Charlotte' },
+                { v:'4.6★', l:'Yelp Rating' },
+                { v:'48h',  l:'Avg Turnaround' },
+                { v:'20yr', l:'Longest Customer' },
+              ].map(({ v, l }, i) => (
+                <div key={l} className="flex-1 text-center relative px-2">
+                  {i > 0 && <div className="stat-divider absolute left-0 top-1/2 -translate-y-1/2 h-8"/>}
+                  <div className="font-display text-xl font-semibold text-ink">{v}</div>
+                  <div className="font-body text-[11px] text-stone mt-1 leading-snug">{l}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* ── Right: hero photo ── */}
+          <div className="relative hidden lg:flex justify-center items-center">
+            <div className="relative w-full max-w-[390px]">
+
+              {/* Main photo */}
+              <div className="animate-float relative rounded-[22px] shadow-lift overflow-hidden aspect-[4/5] bg-cream">
+                <img
+                  src="https://images.unsplash.com/photo-1558769132-cb1aea458c5e?w=700&q=85&fit=crop"
+                  alt="Neatly pressed garments on hangers at Brookshire's Cleaners"
+                  className={`w-full h-full object-cover transition-opacity duration-700 ${imgLoaded ? 'opacity-100' : 'opacity-0'}`}
+                  onLoad={() => setImgLoaded(true)}
+                  onError={e => { e.target.src = 'https://images.unsplash.com/photo-1545173168-9f1947eebb7f?w=700&q=80&fit=crop'; }}
+                />
+                {!imgLoaded && (
+                  <div className="absolute inset-0 bg-cream flex items-center justify-center">
+                    <Logo height={80} variant="dark"/>
+                  </div>
+                )}
+                <div className="absolute inset-0 bg-sage/[0.04] pointer-events-none rounded-[22px]"/>
+              </div>
+
+              {/* Floating review chip */}
+              <div className="absolute -left-10 bottom-20 bg-white rounded-2xl shadow-lift p-4 w-56 hover-lift">
+                <div className="flex gap-px mb-2">{[...Array(5)].map((_,i) => <Icon key={i} n="star" size={11} cls="star"/>)}</div>
+                <p className="font-body text-xs text-ink leading-relaxed">
+                  "I have been a customer for over 20 years and never received anything but excellent service."
+                </p>
+                <div className="mt-2.5 flex items-center gap-2">
+                  <div className="w-6 h-6 rounded-full bg-mist flex items-center justify-center flex-shrink-0">
+                    <span className="font-body text-sage text-xs font-semibold">S</span>
+                  </div>
+                  <span className="font-body text-xs text-stone">Soundra S. · Yelp, Oct 2024</span>
+                </div>
+              </div>
+
+              {/* 48h badge */}
+              <div className="absolute -right-5 top-12 bg-ink text-white rounded-2xl shadow-lift px-4 py-3 text-center hover-lift">
+                <div className="font-display text-2xl font-semibold text-sage">48h</div>
+                <div className="font-body text-xs text-stone/70 mt-0.5">Turnaround</div>
+              </div>
+
+              {/* Address pill */}
+              <div className="absolute -right-3 bottom-10 bg-white rounded-xl shadow-card px-3 py-2 flex items-center gap-1.5 hover-lift">
+                <Icon n="map" size={12} cls="text-sage flex-shrink-0"/>
+                <span className="font-body text-xs text-stone whitespace-nowrap">3900 Brookshire Blvd, CLT</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      {/* Scroll hint */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-fade-in d5 z-10">
+        <span className="font-body text-[10px] text-stone/40 tracking-widest uppercase">Scroll</span>
+        <div className="w-px h-7 bg-gradient-to-b from-stone/20 to-transparent"/>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════════════════════
+   REVIEWS — all real, verbatim from Yelp
+═══════════════════════════════════════════════ */
+const Reviews = () => {
+  /* Real Yelp reviews — verbatim, sourced via browser on Apr 3 2026 */
+  const featured = {
+    name:'Soundra S.', location:'Uptown, Charlotte NC', initial:'S', date:'Oct 2024',
+    text:'I have been a customer for over 20 years and never received anything but excellent service and customer service. Lost a few buttons along the way, but I can live with that! They have been like family, and it\'s been a joy watching their children grow up over the years!',
+  };
+  const cards = [
+    { name:'Eric B.',      location:'Mineral Springs, Charlotte', initial:'E', date:'Jul 2024',
+      text:'Always friendly and pleasant. Their customer service is top-tier. The quality of their work is superb! I love doing business with them and invite anyone who is looking for professional cleaning and courteous service at a great value to patronize Brookshire Cleaners.' },
+    { name:'Christie S.',  location:'Omaha, NE', initial:'C', date:'Apr 2018',
+      text:'Cindy, one of the owners is so precious — very kind and helpful. All of their staff members go out of their way to make you feel welcome and special. Not to mention, they take very good care of your garments. So awesome — everyone else would have thrown them away.' },
+    { name:'Lisa N.',      location:'Rock Hill, SC', initial:'L', date:'Aug 2019',
+      text:"Your clothes and shoes are in great hands when you take them to this cleaners! Great customer service! Everyone is so nice! They treat me just like family when I come in! Couldn't do business with better people in the Charlotte area!" },
+    { name:'Ronald P.',    location:'Charlotte, NC', initial:'R', date:'Aug 2015',
+      text:'Great customer service and helpful staff. Had a pair of pants with stains I could not get out myself — they were able to take the stains out on both sides. They are reasonably priced and they have specials on dry cleaning posted on the door.' },
+    { name:'De P.',        location:'Charlotte, NC', initial:'D', date:'Apr 2018',
+      text:'The service at the business is outstanding. The staff is friendly and professional. They really care about what they do and my dry cleanings are always superb!!' },
+    { name:'Sporadic W.',  location:'Charlotte, NC', initial:'W', date:'Oct 2022',
+      text:'Very friendly, best price in the area, convenient, and they did a good job. I got dry cleaning on a couple pants and shirts, and they fixed a jacket. I will use them again.' },
+  ];
+
+  return (
+    <section id="reviews" className="py-24 bg-ivory" aria-labelledby="reviews-heading">
+      <div className="max-w-6xl mx-auto px-6">
+
+        {/* Header */}
+        <div className="reveal flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-14">
+          <div>
+            <div className="inline-flex items-center gap-2 bg-sage/10 rounded-full px-4 py-1.5 mb-4">
+              <Icon n="star" size={13} cls="text-sage"/>
+              <span className="font-body text-sage text-sm font-medium">Verified Yelp Reviews</span>
+            </div>
+            <h2 id="reviews-heading" className="font-display text-4xl md:text-5xl text-ink">
+              What Charlotte<br/><em>actually says.</em>
+            </h2>
+          </div>
+          {/* Stat pills */}
+          <div className="flex gap-8 pb-1">
+            {[{v:'4.6★',l:'Yelp Rating'},{v:'9',l:'Reviews'},{v:'20+',l:'Yrs serving CLT'}].map(({v,l})=>(
+              <div key={l} className="text-center">
+                <div className="font-display text-2xl text-sage">{v}</div>
+                <div className="font-body text-xs text-stone mt-0.5">{l}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Featured review — full width dark card */}
+        <div className="reveal mb-5">
+          <div className="scale-card hover-lift bg-ink text-white rounded-[22px] p-8 md:p-10 relative overflow-hidden">
+            <div className="big-quote" aria-hidden>"</div>
+            <div className="relative z-10 max-w-3xl pt-8">
+              <p className="font-display text-xl md:text-2xl leading-relaxed text-white/90 mb-8">
+                "{featured.text}"
+              </p>
+              <div className="flex items-center justify-between border-t border-white/10 pt-5">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-full bg-sage flex items-center justify-center flex-shrink-0">
+                    <span className="font-body font-semibold text-white">{featured.initial}</span>
+                  </div>
+                  <div>
+                    <div className="font-body font-medium text-white text-sm">{featured.name}</div>
+                    <div className="font-body text-stone/60 text-xs">{featured.location} · {featured.date}</div>
+                  </div>
+                </div>
+                <div className="flex flex-col items-end gap-1.5">
+                  <div className="flex gap-px">{[...Array(5)].map((_,i)=><Icon key={i} n="star" size={11} cls="star"/>)}</div>
+                  <span className="font-body text-xs font-semibold text-red-400">yelp</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* 3 + 3 grid */}
+        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+          {cards.slice(0,3).map(r => <ReviewCard key={r.name} r={r}/>)}
+        </div>
+        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-5">
+          {cards.slice(3).map(r => <ReviewCard key={r.name} r={r}/>)}
+        </div>
+
+        <div className="reveal text-center mt-10">
+          <a href="https://www.yelp.com/biz/brookshires-cleaners-charlotte"
+             target="_blank" rel="noopener noreferrer"
+             className="inline-flex items-center gap-2 border border-stone/25 text-stone hover:text-sage hover:border-sage font-body text-sm px-6 py-3 rounded-full transition-colors duration-200">
+            Read all reviews on Yelp <Icon n="arrow" size={14}/>
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const ReviewCard = ({ r }) => (
+  <div className="scale-card hover-lift bg-white rounded-[20px] p-6 shadow-card relative">
+    <div className="flex gap-px mb-4">{[...Array(5)].map((_,i)=><Icon key={i} n="star" size={11} cls="star"/>)}</div>
+    <p className="font-body text-sm text-ink leading-relaxed mb-5">"{r.text}"</p>
+    <div className="flex items-center justify-between mt-auto">
+      <div className="flex items-center gap-2.5">
+        <div className="w-8 h-8 rounded-full bg-sage/15 flex items-center justify-center flex-shrink-0">
+          <span className="font-body text-sage text-xs font-semibold">{r.initial}</span>
+        </div>
+        <div>
+          <div className="font-body text-sm font-medium text-ink">{r.name}</div>
+          <div className="font-body text-xs text-stone/60">{r.location}</div>
+        </div>
+      </div>
+      <div className="text-right">
+        <div className="font-body text-[10px] font-semibold text-red-400">yelp</div>
+        <div className="font-body text-[10px] text-stone/50">{r.date}</div>
+      </div>
+    </div>
+  </div>
+);
+
+/* ═══════════════════════════════════════════════
+   SERVICES — no pickup/delivery (not offered)
+═══════════════════════════════════════════════ */
+const Services = () => (
+  <section id="services" className="py-24 bg-cream" aria-labelledby="services-heading">
+    <div className="max-w-6xl mx-auto px-6">
+      <div className="reveal mb-12">
+        <span className="font-body text-sage text-xs font-medium tracking-widest uppercase mb-3 block">What We Do</span>
+        <h2 id="services-heading" className="font-display text-4xl md:text-5xl text-ink">
+          Every garment.<br/>Every occasion.
+        </h2>
+      </div>
+
+      {/* Bento grid — 3 col */}
+      <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-4">
+
+        {/* Dry Cleaning — tall dark hero card */}
+        <div className="scale-card hover-lift bg-ink text-white rounded-[22px] p-8 md:row-span-2 flex flex-col justify-between">
+          <div>
+            <div className="w-12 h-12 bg-sage rounded-xl flex items-center justify-center mb-6">
+              <Icon n="hanger" size={22} cls="text-white"/>
+            </div>
+            <h3 className="font-display text-2xl mb-3">Dry Cleaning</h3>
+            <p className="font-body text-stone text-sm leading-relaxed">
+              Professional cleaning for suits, gowns, formalwear, comforters, curtains, and table cloths. Every garment individually inspected.
+            </p>
+            <ul className="mt-5 space-y-2">
+              {['Suits & dress shirts','Wedding gowns','Comforters & drapes','Curtains & table cloths','Leather & specialty'].map(i => (
+                <li key={i} className="flex items-center gap-2 font-body text-xs text-stone/75">
+                  <div className="w-1 h-1 rounded-full bg-sage flex-shrink-0"/>{i}
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div className="mt-8 pt-5 border-t border-white/10">
+            <div className="font-body text-xs text-stone/50 uppercase tracking-widest mb-1">Starting at</div>
+            <div className="font-display text-2xl text-white">$6 <span className="font-body font-normal text-sm text-stone/50">/ garment</span></div>
+          </div>
+        </div>
+
+        {/* Wash & Fold */}
+        <div className="scale-card hover-lift bg-white rounded-[22px] p-7 shadow-card">
+          <div className="w-11 h-11 bg-mist rounded-xl flex items-center justify-center mb-5">
+            <Icon n="wash" size={20} cls="text-sage"/>
+          </div>
+          <h3 className="font-display text-xl text-ink mb-2.5">Wash & Fold</h3>
+          <p className="font-body text-stone text-sm leading-relaxed">
+            Bring in your everyday laundry. Pick it up clean, fresh, and neatly folded — sorted and ready to put away.
+          </p>
+          <div className="mt-4 font-body text-xs text-sage font-medium">Ready in 24 hours.</div>
+        </div>
+
+        {/* Alterations */}
+        <div className="scale-card hover-lift bg-sage text-white rounded-[22px] p-7">
+          <div className="w-11 h-11 bg-white/20 rounded-xl flex items-center justify-center mb-5">
+            <Icon n="scissors" size={20} cls="text-white"/>
+          </div>
+          <h3 className="font-display text-xl mb-2.5">Alterations</h3>
+          <p className="font-body text-white/80 text-sm leading-relaxed">
+            Hems, tapers, letting out or taking in — our in-house tailor fits clothes to your body, not the other way around.
+          </p>
+          <div className="mt-4 font-body text-xs text-white/60 font-medium">Same-week turnaround available.</div>
+        </div>
+
+        {/* Sneaker Cleaning + Specialty — wide card */}
+        <div className="scale-card hover-lift bg-white rounded-[22px] p-7 shadow-card md:col-span-2">
+          <div className="flex flex-col sm:flex-row sm:items-start gap-5">
+            <div className="w-11 h-11 bg-sage/15 rounded-xl flex items-center justify-center flex-shrink-0">
+              <Icon n="shoe" size={20} cls="text-sage"/>
+            </div>
+            <div>
+              <h3 className="font-display text-xl text-ink mb-2.5">Sneaker Cleaning & Specialty Items</h3>
+              <p className="font-body text-stone text-sm leading-relaxed">
+                Just started our new sneaker cleaning service — plus baseball caps, stuffed animals, and specialty items that need an expert's touch. If you're not sure we can clean it, just ask.
+              </p>
+              <div className="flex flex-wrap gap-2 mt-4">
+                {['Sneakers','Baseball caps','Stuffed animals','Table cloths','Wholesale & retail'].map(tag => (
+                  <span key={tag} className="font-body text-xs text-sage bg-sage/10 px-3 py-1 rounded-full">{tag}</span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+);
+
+/* ═══════════════════════════════════════════════
+   HOW IT WORKS — drop-off shop, no pickup/delivery
+═══════════════════════════════════════════════ */
+const HowItWorks = () => {
+  const steps = [
+    { n:'01', icon:'phone',   color:'bg-sage', title:'Call Ahead',
+      body:'Give us a call at (704) 393-0088 to let us know what you\'re bringing in. We\'ll tell you exactly what to expect — turnaround time, pricing, and any special care notes.' },
+    { n:'02', icon:'hanger',  color:'bg-ink',  title:'Drop It Off',
+      body:'Bring your garments to 3900 Brookshire Blvd. We inspect each piece, note any stains or special requirements, and give you a pickup date on the spot.' },
+    { n:'03', icon:'sparkle', color:'bg-sage', title:'Expert Cleaning',
+      body:'Your clothes go through our professional cleaning process — individually handled, pressed to perfection, and quality-checked by our team before we consider them done.' },
+    { n:'04', icon:'check',   color:'bg-ink',  title:'Pick Up Fresh',
+      body:'Come back when your items are ready and pick them up looking — and smelling — like new. Crisp, clean, hanging, and protected. The difference is immediate.' },
+  ];
+
+  return (
+    <section id="how-it-works" className="py-24 bg-ivory" aria-labelledby="how-heading">
+      <div className="max-w-6xl mx-auto px-6">
+        <div className="reveal text-center mb-14">
+          <span className="font-body text-sage text-xs font-medium tracking-widest uppercase mb-3 block">The Process</span>
+          <h2 id="how-heading" className="font-display text-4xl md:text-5xl text-ink">
+            Simple drop-off.<br/><em>Exceptional results.</em>
+          </h2>
+        </div>
+
+        <div className="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          {steps.map(({ n, icon, color, title, body }) => (
+            <div key={n} className="scale-card hover-lift relative bg-white rounded-[22px] p-7 shadow-card overflow-hidden">
+              <div className="step-num" aria-hidden>{n}</div>
+              <div className="relative z-10">
+                <div className={`w-11 h-11 ${color} rounded-xl flex items-center justify-center mb-5`}>
+                  <Icon n={icon} size={20} cls="text-white"/>
+                </div>
+                <h3 className="font-display text-lg text-ink mb-2.5">{title}</h3>
+                <p className="font-body text-stone text-sm leading-relaxed">{body}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="reveal mt-10 text-center">
+          <a href="tel:+17043930088"
+             className="btn inline-flex items-center gap-2.5 bg-sage text-white font-body font-medium text-base px-9 py-4 rounded-full">
+            <Icon n="phone" size={17}/>Call (704) 393-0088
+          </a>
+          <p className="font-body text-stone/60 text-sm mt-3">
+            Tue–Fri 7:00am–5:00pm · Sat 9:00am–3:00pm
+          </p>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+/* ═══════════════════════════════════════════════
+   WHY BROOKSHIRE
+═══════════════════════════════════════════════ */
+const WhyUs = () => (
+  <section className="py-24 bg-ink text-white relative overflow-hidden" aria-labelledby="why-heading">
+    <div className="orb w-[480px] h-[480px] bg-sage opacity-[0.08] -top-24 -right-24"/>
+    <div className="max-w-6xl mx-auto px-6 relative z-10">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+
+        <div className="reveal-l">
+          <span className="font-body text-sage text-xs font-medium tracking-widest uppercase mb-4 block">Why Brookshire</span>
+          <h2 id="why-heading" className="font-display text-4xl md:text-5xl text-white mb-6">
+            We treat your wardrobe<br/><em className="text-sage">like an investment.</em>
+          </h2>
+          <p className="font-body text-stone text-base leading-[1.8] mb-8 max-w-sm">
+            Charlotte has no shortage of dry cleaners. What sets us apart is consistency — every garment receives the same care whether it's a $40 shirt or a $2,000 suit. Our customers notice. That's why they stay for 20 years.
+          </p>
+          <div className="flex flex-col gap-3.5">
+            {[
+              'Locally owned and operated since 2009 — not a franchise',
+              'Every garment individually inspected before and after cleaning',
+              'Expert alterations done in-house by our own tailor',
+              'New sneaker cleaning service — one of the few in Charlotte',
+            ].map(t => (
+              <div key={t} className="flex items-start gap-3">
+                <div className="w-5 h-5 bg-sage rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <Icon n="check" size={11} cls="text-white"/>
+                </div>
+                <span className="font-body text-sm text-white/80 leading-relaxed">{t}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="reveal-r grid grid-cols-2 gap-4">
+          {[
+            { icon:'shield', title:'Quality You Can See',   body:"If it doesn't look right, tell us. We'll make it right — every time, no questions asked." },
+            { icon:'leaf',   title:'Trusted Since 2009',    body:'Cindy and the team have been part of this community for over 17 years. Faces you recognize, service you can count on.' },
+            { icon:'clock',  title:'48-Hour Turnaround',    body:'Standard turnaround is 2 business days. Ask about rush service for last-minute needs.' },
+            { icon:'sparkle','title':'New: Sneaker Cleaning', body:'Fresh kicks, back to life. Our new sneaker cleaning service handles what regular laundry can\'t.' },
+          ].map(({ icon, title, body }) => (
+            <div key={title} className="scale-card hover-lift bg-white/[0.05] border border-white/[0.08] rounded-[20px] p-6">
+              <div className="w-10 h-10 bg-sage/20 rounded-xl flex items-center justify-center mb-4">
+                <Icon n={icon} size={18} cls="text-sage"/>
+              </div>
+              <h3 className="font-display text-[0.95rem] text-white mb-1.5">{title}</h3>
+              <p className="font-body text-stone text-xs leading-relaxed">{body}</p>
+            </div>
+          ))}
+        </div>
+
+      </div>
+    </div>
+  </section>
+);
+
+/* ═══════════════════════════════════════════════
+   VISIT US — local section with correct hours/area
+═══════════════════════════════════════════════ */
+const VisitUs = () => (
+  <section id="visit-us" className="py-20 bg-cream">
+    <div className="max-w-6xl mx-auto px-6">
+      <div className="reveal bg-white rounded-[22px] shadow-card overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-2">
+
+          {/* Left: logo on dark */}
+          <div className="relative overflow-hidden min-h-[300px] flex items-center justify-center"
+               style={{background:'linear-gradient(145deg,#4A7C6F 0%,#1C1C1E 100%)'}}>
+            <div className="noise"/>
+            <div className="relative z-10 text-center p-10">
+              <Logo height={100} variant="white"/>
+              <p className="font-body text-white/30 text-xs tracking-widest uppercase mt-6">
+                Charlotte's neighborhood cleaners since 2009
+              </p>
+            </div>
+          </div>
+
+          {/* Right: info */}
+          <div className="p-10 flex flex-col justify-center">
+            <span className="font-body text-sage text-xs font-medium tracking-widest uppercase mb-4 block">Find Us</span>
+            <h2 className="font-display text-3xl text-ink mb-4">
+              Come see us in<br/>West Charlotte.
+            </h2>
+            <p className="font-body text-stone text-sm leading-[1.8] mb-6">
+              We're right on Brookshire Blvd — easy to find, easy to park. Drop off your garments, tell us what you need, and we'll handle the rest.
+            </p>
+
+            <div className="space-y-3 mb-6">
+              <a href="https://maps.google.com/?q=3900+Brookshire+Blvd+Charlotte+NC+28216"
+                 target="_blank" rel="noopener"
+                 className="flex items-start gap-3 font-body text-sm text-stone hover:text-sage transition-colors">
+                <Icon n="map" size={15} cls="text-sage flex-shrink-0 mt-0.5"/>
+                3900 Brookshire Blvd, Charlotte, NC 28216
+              </a>
+              <div className="flex items-start gap-3 font-body text-sm text-stone">
+                <Icon n="clock" size={15} cls="text-sage flex-shrink-0 mt-0.5"/>
+                <div>
+                  <div>Tue–Fri: 7:00am – 5:00pm</div>
+                  <div>Saturday: 9:00am – 3:00pm</div>
+                  <div className="text-stone/50 text-xs mt-0.5">Closed Sunday & Monday</div>
+                </div>
+              </div>
+              <a href="tel:+17043930088"
+                 className="flex items-center gap-3 font-body text-sm text-sage hover:text-ink transition-colors">
+                <Icon n="phone" size={15} cls="flex-shrink-0"/>
+                (704) 393-0088
+              </a>
+              <a href="mailto:BrookshireCleanersCLT@gmail.com"
+                 className="flex items-center gap-3 font-body text-sm text-sage hover:text-ink transition-colors break-all">
+                <Icon n="mail" size={15} cls="flex-shrink-0"/>
+                BrookshireCleanersCLT@gmail.com
+              </a>
+            </div>
+
+            <a href="tel:+17043930088"
+               className="btn inline-flex items-center justify-center gap-2.5 bg-sage text-white font-body font-medium text-sm px-7 py-3.5 rounded-full self-start">
+              <Icon n="phone" size={15}/>Call to Schedule
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ═══════════════════════════════════════════════
+   CTA — dark, bold, single clear action
+═══════════════════════════════════════════════ */
+const CTA = () => (
+  <section id="contact" className="py-28 bg-ink relative overflow-hidden">
+    <div className="orb w-80 h-80 bg-sage opacity-[0.12] top-0 left-1/3 -translate-y-1/2"/>
+    <div className="orb w-56 h-56 bg-sage opacity-[0.08] bottom-0 right-1/4 translate-y-1/3"/>
+    <div className="noise"/>
+
+    <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+      <div className="reveal">
+        <div className="flex justify-center mb-8">
+          <Logo height={70} variant="white"/>
+        </div>
+
+        <h2 className="font-display text-5xl md:text-6xl text-white mb-6 leading-[1.05]">
+          Your clothes deserve<br/>
+          <em className="text-sage not-italic">better than a chain.</em>
+        </h2>
+
+        <p className="font-body text-stone text-lg leading-[1.8] mb-10 max-w-lg mx-auto">
+          Come see why Charlotte neighbors have been trusting Brookshire's with their best garments for over 17 years.
+        </p>
+
+        <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <a href="tel:+17043930088"
+             className="btn inline-flex items-center justify-center gap-3 bg-sage text-white font-body font-semibold text-lg px-12 py-5 rounded-full">
+            <Icon n="phone" size={20}/>Call (704) 393-0088
+          </a>
+          <a href="mailto:BrookshireCleanersCLT@gmail.com"
+             className="inline-flex items-center justify-center gap-2 border border-white/15 text-white/80 font-body font-medium text-base px-10 py-5 rounded-full hover:border-sage hover:text-sage transition-colors duration-200">
+            <Icon n="mail" size={17}/>Email Us
+          </a>
+        </div>
+
+        <div className="flex flex-wrap justify-center gap-6">
+          {['Expert dry cleaning','Alterations in-house','Sneaker cleaning','Trusted since 2009'].map(t => (
+            <div key={t} className="flex items-center gap-2 font-body text-sm text-stone/70">
+              <Icon n="check" size={13} cls="text-sage"/>{t}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+);
+
+/* ═══════════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════════ */
+const Footer = () => (
+  <footer className="bg-ink border-t border-white/[0.06]">
+    <div className="max-w-6xl mx-auto px-6 pt-14 pb-8">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+
+        <div className="md:col-span-2">
+          <Logo height={54} variant="white"/>
+          <p className="font-body text-stone text-sm leading-[1.8] max-w-xs mt-5 mb-5">
+            Charlotte's trusted neighborhood dry cleaner. Locally owned, expertly run since 2009. Dry cleaning, wash & fold, alterations, sneaker cleaning.
+          </p>
+          <div className="flex items-center gap-1.5">
+            <div className="flex gap-px">{[...Array(5)].map((_,i)=><Icon key={i} n="star" size={13} cls="star"/>)}</div>
+            <span className="font-body text-stone/50 text-xs ml-1">4.6 · Yelp</span>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="font-body font-medium text-white text-xs uppercase tracking-widest mb-5">Services</h4>
+          <ul className="space-y-3">
+            {['Dry Cleaning','Wash & Fold','Alterations','Sneaker Cleaning','Wedding Gowns'].map(s => (
+              <li key={s}>
+                <a href="#services" className="ulink font-body text-stone text-sm hover:text-white transition-colors">{s}</a>
+              </li>
+            ))}
+          </ul>
+        </div>
+
+        <div>
+          <h4 className="font-body font-medium text-white text-xs uppercase tracking-widest mb-5">Hours & Contact</h4>
+          <div className="space-y-3.5">
+            <a href="tel:+17043930088"
+               className="flex items-center gap-2 font-body text-stone text-sm hover:text-white transition-colors">
+              <Icon n="phone" size={13}/>(704) 393-0088
+            </a>
+            <a href="mailto:BrookshireCleanersCLT@gmail.com"
+               className="flex items-start gap-2 font-body text-stone text-xs hover:text-white transition-colors break-all">
+              <Icon n="mail" size={13} cls="flex-shrink-0 mt-0.5"/>BrookshireCleanersCLT@gmail.com
+            </a>
+            <div className="flex items-start gap-2 font-body text-stone text-sm">
+              <Icon n="map" size={13} cls="flex-shrink-0 mt-0.5"/>
+              <span>3900 Brookshire Blvd<br/>Charlotte, NC 28216</span>
+            </div>
+            <div className="flex items-start gap-2 font-body text-stone text-sm">
+              <Icon n="clock" size={13} cls="flex-shrink-0 mt-0.5"/>
+              <span>Tue–Fri 7am–5pm<br/>Sat 9am–3pm<br/>
+                <span className="text-stone/40 text-xs">Closed Sun & Mon</span>
+              </span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="border-t border-white/[0.07] pt-6 flex flex-col sm:flex-row justify-between items-center gap-3">
+        <p className="font-body text-stone/40 text-xs">
+          © {new Date().getFullYear()} Brookshire's Cleaners · 3900 Brookshire Blvd, Charlotte NC 28216
+        </p>
+        <div className="flex gap-5">
+          {['Privacy','Terms'].map(t => (
+            <a key={t} href="#" className="font-body text-stone/35 text-xs hover:text-stone/60 transition-colors">{t}</a>
+          ))}
+        </div>
+      </div>
+    </div>
+  </footer>
+);
+
+/* ═══════════════════════════════════════════════
+   APP
+═══════════════════════════════════════════════ */
+const App = () => {
+  useReveal();
+  return (
+    <>
+      <Nav/>
+      <main>
+        <Hero/>
+        <Reviews/>
+        <Services/>
+        <HowItWorks/>
+        <WhyUs/>
+        <VisitUs/>
+        <CTA/>
+      </main>
+      <Footer/>
+    </>
+  );
+};
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
