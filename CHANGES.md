@@ -37,6 +37,19 @@ Updated the `stone` color token from `#9E9589` to `#7A7570`. The original value 
 
 ---
 
+## OG Image and Apple Touch Icon
+*public/og-image.jpg, public/apple-touch-icon.png, scripts/generate-images.mjs*
+
+Generated the two missing assets that the `<head>` tags were already pointing to.
+
+`og-image.jpg` (1200×630) is the image that appears when someone shares the site link on social media, iMessage, Slack, or any platform that reads Open Graph tags. It shows the business name in large serif type, the tagline, service pills (Dry Cleaning, Alterations, Wash & Fold, Sneaker Cleaning), and a footer bar with the Yelp rating, address, and phone number. The right third uses the sage green from the site's color palette with a large hanger icon.
+
+`apple-touch-icon.png` (180×180) is what iOS uses when someone adds the site to their home screen. It uses the same rounded-square format as native app icons — sage green background with a white hanger icon centered.
+
+Both images are generated from SVG by a script at `scripts/generate-images.mjs`. To regenerate them (if the business info or branding changes), run `npm run generate-images`. The script uses `sharp` to convert the SVG definitions to optimized JPG and PNG.
+
+---
+
 ## Vite Migration — Remove Babel and Tailwind CDN from the Browser
 *Full project restructure*
 
