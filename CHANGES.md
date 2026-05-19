@@ -37,6 +37,47 @@ Updated the `stone` color token from `#9E9589` to `#7A7570`. The original value 
 
 ---
 
+## Vite Migration — Remove Babel and Tailwind CDN from the Browser
+*Full project restructure*
+
+Migrated the site from a single HTML file with CDN-loaded dependencies to a proper Vite + React project with a build step.
+
+The core problem with the old setup was that the browser had to download and run a full JavaScript compiler (Babel Standalone, ~846 KB gzipped) on every page load just to parse the JSX before React could render anything. On top of that, the Tailwind Play CDN loaded all possible CSS utilities (~298 KB gzipped) and generated styles at runtime using a DOM observer. Neither of those tools is meant for production — they exist for quick demos and prototyping.
+
+With Vite, the JSX is compiled once at build time. The browser gets plain JavaScript it can run immediately. Tailwind scans the source files during the build and keeps only the CSS classes that are actually used.
+
+**What the build produces:**
+
+| File | Gzipped size |
+|---|---|
+| React + ReactDOM | 45 KB |
+| All components + app code | 10.7 KB |
+| CSS (Tailwind purged) | 5.2 KB |
+| HTML shell | 1.6 KB |
+| **Total** | **~62 KB** |
+
+The old CDN setup transferred roughly 1.38 MB gzipped. That is a 96% reduction in page weight. On a mobile connection, the difference between these two numbers is several seconds of blank screen.
+
+**What changed structurally:**
+
+The 1,000-line monolithic `index.html` is now split into a proper project:
+
+- `src/components/` — one file per component (Nav, Hero, Reviews, ReviewCard, Services, HowItWorks, WhyUs, VisitUs, CTA, Footer, Icon, Logo, ErrorBoundary)
+- `src/data/` — review copy and process steps extracted into their own files so they can be updated without touching component code
+- `src/hooks/useReveal.js` — the scroll animation hook in its own file
+- `src/styles/index.css` — all custom CSS with Tailwind directives
+- `src/App.jsx` — root component that assembles the page
+- `src/main.jsx` — entry point, mounts the app
+- `index.html` — lean HTML shell with meta tags and the schema block; no more inline scripts or CDN tags
+- `public/` — static assets (logos, favicons) served directly
+- `vite.config.js`, `tailwind.config.js`, `postcss.config.js`, `package.json` — build tooling config
+
+All component logic, JSX, and copy is identical to the previous version. Nothing about how the site looks or behaves changed — only how it is built and delivered.
+
+To run locally: `npm run dev`. To build for deployment: `npm run build`.
+
+---
+
 ## Quick Wins — Security, SEO & Accessibility
 *index.html*
 

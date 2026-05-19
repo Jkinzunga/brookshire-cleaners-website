@@ -1,0 +1,86 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: #F7F4EF;
+  color: #1C1C1E;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: #F7F4EF; }
+::-webkit-scrollbar-thumb { background: #C8DBD5; border-radius: 3px; }
+
+/* Animation delays */
+.d1 { animation-delay: .1s; }
+.d2 { animation-delay: .2s; }
+.d3 { animation-delay: .3s; }
+.d4 { animation-delay: .4s; }
+.d5 { animation-delay: .5s; }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(26px); transition: opacity .6s ease, transform .6s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-l { opacity: 0; transform: translateX(-24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal-l.visible { opacity: 1; transform: translateX(0); }
+.reveal-r { opacity: 0; transform: translateX(24px); transition: opacity .6s ease, transform .6s ease; }
+.reveal-r.visible { opacity: 1; transform: translateX(0); }
+
+/* Interactions */
+.hover-lift { transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s ease; }
+.hover-lift:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.11); }
+.btn { transition: transform .14s ease, box-shadow .14s ease; cursor: pointer; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(74,124,111,.32); }
+.btn:active { transform: translateY(0); }
+.scale-card { transition: transform .28s ease; }
+.scale-card:hover { transform: scale(1.012); }
+
+/* Nav blur */
+.nav-blur {
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(247,244,239,.9);
+}
+
+/* Ambient orb */
+.orb { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; z-index: 0; }
+
+/* Stars */
+.star { color: #F5A623; }
+
+/* Noise texture */
+.noise {
+  position: absolute; inset: 0; pointer-events: none; opacity: .025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Underline link */
+.ulink { position: relative; }
+.ulink::after {
+  content: ''; position: absolute; bottom: -1px; left: 0;
+  width: 0; height: 1.5px; background: #4A7C6F; transition: width .22s ease;
+}
+.ulink:hover::after { width: 100%; }
+
+/* Review card quote mark */
+.big-quote {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 4.5rem; line-height: 1; color: #C8DBD5;
+  position: absolute; top: .75rem; left: 1.25rem;
+  pointer-events: none; user-select: none;
+}
+
+/* Step number ghost */
+.step-num {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 5.5rem; line-height: 1; color: #EDE9E1;
+  position: absolute; bottom: -.5rem; right: .75rem;
+  pointer-events: none; user-select: none;
+}
+
+/* Stat divider */
+.stat-divider { width: 1px; background: #EDE9E1; align-self: stretch; margin: 0 .25rem; }
