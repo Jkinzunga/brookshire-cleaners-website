@@ -2,6 +2,13 @@
 
 ---
 
+## Privacy and Terms Pages
+*privacy.html, terms.html, index.html*
+
+Created standalone `privacy.html` and `terms.html` pages. Both use the same fonts and color scheme as the main site without pulling in React or Tailwind — they are plain HTML with a small inline stylesheet, which keeps them fast and simple. The content covers the basics a local service business needs: what data is collected, how garments are handled, unclaimed item policy, alteration policy, and liability limits. Neither page is legal advice and both should be reviewed by the owner before going live. The footer links in `index.html` that previously pointed to `#` now link to the actual pages.
+
+---
+
 ## Error Boundary
 *index.html*
 

@@ -944,9 +944,8 @@ const Footer = () => (
           © {new Date().getFullYear()} Brookshire's Cleaners · 3900 Brookshire Blvd, Charlotte NC 28216
         </p>
         <div className="flex gap-5">
-          {['Privacy','Terms'].map(t => (
-            <a key={t} href="#" className="font-body text-stone/35 text-xs hover:text-stone/60 transition-colors">{t}</a>
-          ))}
+          <a href="/privacy.html" className="font-body text-stone/35 text-xs hover:text-stone/60 transition-colors">Privacy</a>
+          <a href="/terms.html"   className="font-body text-stone/35 text-xs hover:text-stone/60 transition-colors">Terms</a>
         </div>
       </div>
     </div>
