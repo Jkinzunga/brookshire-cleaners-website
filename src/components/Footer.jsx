@@ -12,7 +12,7 @@ export default function Footer() {
             <p className="font-body text-stone text-sm leading-[1.8] max-w-xs mt-5 mb-5">
               Charlotte's trusted neighborhood dry cleaner. Locally owned, expertly run since 2009. Dry cleaning, wash & fold, alterations, sneaker cleaning.
             </p>
-            <div className="flex items-center gap-1.5">
+            <div className="flex items-center gap-2">
               <div className="flex gap-px">{[...Array(5)].map((_, i) => <Icon key={i} n="star" size={13} cls="star" />)}</div>
               <span className="font-body text-stone/50 text-xs ml-1">4.6 · Yelp</span>
             </div>
@@ -31,7 +31,7 @@ export default function Footer() {
 
           <div>
             <h4 className="font-body font-medium text-white text-xs uppercase tracking-widest mb-5">Hours & Contact</h4>
-            <div className="space-y-3.5">
+            <div className="space-y-4">
               <a href="tel:+17043930088"
                  className="flex items-center gap-2 font-body text-stone text-sm hover:text-white transition-colors">
                 <Icon n="phone" size={13} />(704) 393-0088

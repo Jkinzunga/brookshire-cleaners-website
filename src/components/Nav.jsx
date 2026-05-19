@@ -30,12 +30,12 @@ export default function Nav() {
             </svg>
           </div>
           <div className="flex flex-col leading-tight">
-            <span className="font-display font-semibold text-ink text-[1.05rem] tracking-wide">Brookshire</span>
-            <span className="font-body text-stone text-[0.62rem] tracking-[0.18em] uppercase">Cleaners · Charlotte, NC</span>
+            <span className="font-display font-semibold text-ink text-base tracking-wide">Brookshire</span>
+            <span className="font-body text-stone text-[10px] tracking-[0.18em] uppercase">Cleaners · Charlotte, NC</span>
           </div>
         </a>
 
-        <div className="hidden md:flex items-center gap-7">
+        <div className="hidden md:flex items-center gap-8">
           {links.map((l) => (
             <a key={l} href={`#${l.toLowerCase().replace(/ /g, '-')}`}
                className="ulink font-body text-sm text-stone hover:text-ink transition-colors duration-200">
@@ -46,11 +46,11 @@ export default function Nav() {
 
         <div className="hidden md:flex items-center gap-3">
           <a href="tel:+17043930088"
-             className="flex items-center gap-1.5 font-body text-sm text-stone hover:text-sage transition-colors">
+             className="flex items-center gap-2 font-body text-sm text-stone hover:text-sage transition-colors">
             <Icon n="phone" size={13} />(704) 393-0088
           </a>
           <a href="tel:+17043930088"
-             className="btn bg-sage text-white font-body font-medium text-sm px-5 py-2.5 rounded-full">
+             className="btn bg-sage text-white font-body font-medium text-sm px-5 py-3 rounded-full">
             Call to Schedule
           </a>
         </div>

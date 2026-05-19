@@ -5,7 +5,7 @@ export default function VisitUs() {
   return (
     <section id="visit-us" className="py-20 bg-cream">
       <div className="max-w-6xl mx-auto px-6">
-        <div className="reveal bg-white rounded-[22px] shadow-card overflow-hidden">
+        <div className="reveal bg-white rounded-2xl shadow-card overflow-hidden">
           <div className="grid grid-cols-1 md:grid-cols-2">
 
             <div className="relative overflow-hidden min-h-[300px] flex items-center justify-center"
@@ -56,7 +56,7 @@ export default function VisitUs() {
               </div>
 
               <a href="tel:+17043930088"
-                 className="btn inline-flex items-center justify-center gap-2.5 bg-sage text-white font-body font-medium text-sm px-7 py-3.5 rounded-full self-start">
+                 className="btn inline-flex items-center justify-center gap-3 bg-sage text-white font-body font-medium text-sm px-8 py-4 rounded-full self-start">
                 <Icon n="phone" size={15} />Call to Schedule
               </a>
             </div>

@@ -22,7 +22,7 @@ export default function WhyUs() {
             <p className="font-body text-stone text-base leading-[1.8] mb-8 max-w-sm">
               Charlotte has no shortage of dry cleaners. What sets us apart is consistency — every garment receives the same care whether it's a $40 shirt or a $2,000 suit. Our customers notice. That's why they stay for 20 years.
             </p>
-            <div className="flex flex-col gap-3.5">
+            <div className="flex flex-col gap-4">
               {[
                 'Locally owned and operated since 2009 — not a franchise',
                 'Every garment individually inspected before and after cleaning',
@@ -41,11 +41,11 @@ export default function WhyUs() {
 
           <div className="reveal-r grid grid-cols-2 gap-4">
             {features.map(({ icon, title, body }) => (
-              <div key={title} className="scale-card hover-lift bg-white/[0.05] border border-white/[0.08] rounded-[20px] p-6">
+              <div key={title} className="scale-card bg-white/[0.05] border border-white/[0.08] rounded-2xl p-6">
                 <div className="w-10 h-10 bg-sage/20 rounded-xl flex items-center justify-center mb-4">
                   <Icon n={icon} size={18} cls="text-sage" />
                 </div>
-                <h3 className="font-display text-[0.95rem] text-white mb-1.5">{title}</h3>
+                <h3 className="font-display text-sm text-white mb-1.5">{title}</h3>
                 <p className="font-body text-stone text-xs leading-relaxed">{body}</p>
               </div>
             ))}

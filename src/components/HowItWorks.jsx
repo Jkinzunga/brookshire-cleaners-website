@@ -14,13 +14,13 @@ export default function HowItWorks() {
 
         <div className="reveal grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {steps.map(({ n, icon, color, title, body }) => (
-            <div key={n} className="scale-card hover-lift relative bg-white rounded-[22px] p-7 shadow-card overflow-hidden">
+            <div key={n} className="scale-card relative bg-white rounded-2xl p-6 shadow-card overflow-hidden">
               <div className="step-num" aria-hidden>{n}</div>
               <div className="relative z-10">
-                <div className={`w-11 h-11 ${color} rounded-xl flex items-center justify-center mb-5`}>
+                <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center mb-5`}>
                   <Icon n={icon} size={20} cls="text-white" />
                 </div>
-                <h3 className="font-display text-lg text-ink mb-2.5">{title}</h3>
+                <h3 className="font-display text-lg text-ink mb-3">{title}</h3>
                 <p className="font-body text-stone text-sm leading-relaxed">{body}</p>
               </div>
             </div>
@@ -29,7 +29,7 @@ export default function HowItWorks() {
 
         <div className="reveal mt-10 text-center">
           <a href="tel:+17043930088"
-             className="btn inline-flex items-center gap-2.5 bg-sage text-white font-body font-medium text-base px-9 py-4 rounded-full">
+             className="btn inline-flex items-center gap-3 bg-sage text-white font-body font-medium text-base px-10 py-4 rounded-full">
             <Icon n="phone" size={17} />Call (704) 393-0088
           </a>
           <p className="font-body text-stone/60 text-sm mt-3">

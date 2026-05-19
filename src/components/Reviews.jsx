@@ -28,7 +28,7 @@ export default function Reviews() {
         </div>
 
         <div className="reveal mb-5">
-          <div className="scale-card hover-lift bg-ink text-white rounded-[22px] p-8 md:p-10 relative overflow-hidden">
+          <div className="scale-card bg-ink text-white rounded-2xl p-8 md:p-10 relative overflow-hidden">
             <div className="big-quote" aria-hidden>"</div>
             <div className="relative z-10 max-w-3xl pt-8">
               <p className="font-display text-xl md:text-2xl leading-relaxed text-white/90 mb-8">
@@ -44,7 +44,7 @@ export default function Reviews() {
                     <div className="font-body text-stone/60 text-xs">{featured.location} · {featured.date}</div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end gap-1.5">
+                <div className="flex flex-col items-end gap-2">
                   <div className="flex gap-px">{[...Array(5)].map((_, i) => <Icon key={i} n="star" size={11} cls="star" />)}</div>
                   <span className="font-body text-xs font-semibold text-red-400">yelp</span>
                 </div>
@@ -53,10 +53,10 @@ export default function Reviews() {
           </div>
         </div>
 
-        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-5 mb-5">
+        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
           {cards.slice(0, 3).map((r) => <ReviewCard key={r.name} r={r} />)}
         </div>
-        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="reveal grid grid-cols-1 md:grid-cols-3 gap-6">
           {cards.slice(3).map((r) => <ReviewCard key={r.name} r={r} />)}
         </div>
 

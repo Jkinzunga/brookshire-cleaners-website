@@ -32,12 +32,12 @@ body {
 
 /* Interactions */
 .hover-lift { transition: transform .28s cubic-bezier(.34,1.56,.64,1), box-shadow .28s ease; }
-.hover-lift:hover { transform: translateY(-5px); box-shadow: 0 16px 40px rgba(0,0,0,0.11); }
+.hover-lift:hover { transform: translateY(-4px); box-shadow: 0 16px 40px rgba(0,0,0,0.11); }
 .btn { transition: transform .14s ease, box-shadow .14s ease; cursor: pointer; }
 .btn:hover { transform: translateY(-2px); box-shadow: 0 7px 22px rgba(74,124,111,.32); }
 .btn:active { transform: translateY(0); }
-.scale-card { transition: transform .28s ease; }
-.scale-card:hover { transform: scale(1.012); }
+.scale-card { transition: transform .28s ease, box-shadow .28s ease; }
+.scale-card:hover { transform: scale(1.012); box-shadow: 0 8px 32px rgba(0,0,0,0.10); }
 
 /* Nav blur */
 .nav-blur {

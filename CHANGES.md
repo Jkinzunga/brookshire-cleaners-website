@@ -2,6 +2,35 @@
 
 ---
 
+## Design System Cleanup
+*tailwind.config.js, src/styles/index.css, all components*
+
+Went through every component and removed the rough edges that accumulate when a design is built quickly — arbitrary values, fractional spacing, and conflicting class combinations.
+
+**Spacing**
+
+Everything now sits on an 8-point grid. Removed the half-unit gaps and padding that were scattered throughout: `gap-1.5` → `gap-2`, `gap-2.5` → `gap-3`, `gap-3.5` → `gap-4`, `py-2.5` → `py-3`, `py-3.5` → `py-4`, `p-7` → `p-6`, `px-9` → `px-10`, `mb-2.5` → `mb-3`, `mt-2.5` → `mt-3`, `space-y-3.5` → `space-y-4`. These changes affect Nav, Hero, Reviews, Services, HowItWorks, WhyUs, VisitUs, and Footer.
+
+**Border radius**
+
+All cards now use the same `rounded-2xl` token (16px) instead of the mix of `rounded-[20px]` and `rounded-[22px]` that existed before. Consistent across every section.
+
+**Type scale**
+
+Added a `hero` font size token to `tailwind.config.js` so the headline size has a name (`text-hero: 4.2rem / 1.04 lh`) rather than being hardcoded inline. Also added `lineHeight.body` (1.8) and `lineHeight.heading` (1.05) tokens for future use. Replaced the few remaining arbitrary text sizes: `text-[1.05rem]` → `text-base`, `text-[0.95rem]` → `text-sm`, `text-[11px]` → `text-xs`.
+
+**Hover behavior**
+
+Cards had both `scale-card` and `hover-lift` applied together. Because `.scale-card:hover` is defined after `.hover-lift:hover` in the stylesheet, the scale transform silently won out every time — the lift never fired. Fixed by removing `hover-lift` from all card elements (11 instances across Reviews, ReviewCard, Services, HowItWorks, and WhyUs) and giving `.scale-card:hover` its own subtle shadow so the interaction still reads clearly. The small floating badges in the hero — the review chip, the 48h badge, and the address pill — kept `hover-lift` since those are standalone elements that should lift, not scale.
+
+The lift distance on `hover-lift` was also trimmed from 5px to 4px, which reads as intentional movement rather than a jump.
+
+**Icon size**
+
+Service card icons were `w-11 h-11` (44px) while the rest of the site uses `w-12 h-12` (48px) as the standard icon container size. Unified to 48px across all four service cards.
+
+---
+
 ## Privacy and Terms Pages
 *privacy.html, terms.html, index.html*
 

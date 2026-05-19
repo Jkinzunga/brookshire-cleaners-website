@@ -15,6 +15,13 @@ export default {
         display: ['"Playfair Display"', 'Georgia', 'serif'],
         body:    ['Inter', 'system-ui', 'sans-serif'],
       },
+      fontSize: {
+        hero: ['4.2rem', { lineHeight: '1.04' }],
+      },
+      lineHeight: {
+        body:    '1.8',
+        heading: '1.05',
+      },
       boxShadow: {
         card: '0 2px 20px rgba(0,0,0,0.06)',
         lift: '0 10px 40px rgba(0,0,0,0.10)',
