@@ -2,6 +2,13 @@
 
 ---
 
+## Color Contrast Fix
+*index.html*
+
+Updated the `stone` color token from `#9E9589` to `#7A7570`. The original value produced a contrast ratio of roughly 2.9:1 against the ivory background, which falls short of the WCAG AA minimum of 4.5:1 for normal-sized text. The new value hits approximately 4.6:1, bringing body copy, nav links, card subtitles, and any other `text-stone` elements into compliance. The color still reads as the same warm gray — it is just dark enough to be legible.
+
+---
+
 ## Quick Wins — Security, SEO & Accessibility
 *index.html*
 
